@@ -3,19 +3,50 @@
 
 
 class Player:
-    def __init__(self, name, in_room, inventory):
+
+    def __init__(self, name, starting_room):
         self.name = name
-        self.in_room = in_room
-        self.inventory = inventory
+        self.current_room = starting_room
 
-    def __repr__(self):
-        return self.name
+        self.inventory = {}
+    # sets current room and prints it... if unable to do the room movement it prints my move error
 
-    def taunt(self):
-        print("let's tango!...Merica!")
+    def travel(self, direction):
+        # player should be able to move in a direction
+        next_room = self.current_room.get_room(direction)
+        if next_room is not None:
+            self.current_room = next_room
+            print(self.current_room)
+        else:
+            print(
+                f"{self.name} can't go that way... bruises or impeeding death await")
 
-    def greet(self):
-        print("Hello!..Good day to you.")
+    def add_item(self, item):
+        try:
+            self.inventory[item] = self.current_room.items[item]
+            del self.current_room.items[item]
+            print(f'picked up {item}')
+            self.has_what(self.inventory[item])
+        except KeyError:
+            print("wtf")
 
-    def goodbye(self):
-        return "Screw this, I QUIT!"
+    def remove_item(self, item):
+        try:
+            self.current_room.items[item] = self.inventory[item]
+            del self.inventory[item]
+            self.droped_what(self.current_room.items[item])
+        except KeyError:
+            print('wtf')
+
+    def has_what(self, item):
+        print(f'{self.name} now has {item.on_take()}')
+
+    def droped_what(self, item):
+        print(f'{self.name} now has {item.on_drop()}')
+
+    def get_inventory(self):
+        if len(self.inventory) > 0:
+            for item in self.inventory:
+                print(item)
+        else:
+            print("you aint got no shtuff")

@@ -42,4 +42,11 @@ class Player:
         print(f'{self.name} now has {item.on_take()}')
 
     def droped_what(self, item):
-        print(f'{self.name} now has droped {item.on_take()}')
+        print(f'{self.name} now has {item.on_drop()}')
+
+    def get_inventory(self):
+        if len(self.inventory) > 0:
+            for item in self.inventory:
+                print(item)
+        else:
+            print("you aint got no shtuff")

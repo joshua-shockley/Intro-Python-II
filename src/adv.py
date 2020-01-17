@@ -47,58 +47,15 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
 #
 # Main
 #
 # this sets up picking up or droping items
-
-
-# def get_item():
-#     collect = input(
-#         "what do you want to do with 'all the things'...? ex: take item or drop item \n ---->  ")
-#     split_up = collect.split()
-#     if len(split_up) == 1 and split_up[0] == "neither":
-#         print(f"ok.... then.... where to next {player.name}")
-#         print(player.current_room.get_exits_string())  # prints exits
-#         return 1
-#     if len(split_up) == 2:
-#         verb = str(split_up[0].lower())
-#         noun = str(split_up[1].lower())
-#         if noun in player.current_room.items:
-#             if verb == "take":
-#                 print(player.current_room.get_exits_string())
-#                 player.add_item(noun)
-#                 print(player.current_room.get_exits_string())
-#             elif verb == "drop":
-#                 print(
-#                     f"{player.name}... you can't drop what you aren't holding.....")
-#             else:
-#                 print(
-#                     'dont understand what you want to do here...\n take item, drop item or neither are the only acceptable answers')
-#         elif noun in player.inventory.keys():
-#             if verb == "drop":
-#                 player.remove_item(noun)
-#                 print(player.current_room.get_exits_string())
-#             elif verb == "take":
-#                 print(
-#                     f"Really.... {player.name}... you are already carrying that.....")
-#         elif noun == "inventory" or "stuff" or "things" or "items" or "i" and verb == "see":
-#             print(player.inventory)
-
-#         else:
-#             print(f"how can you pick up {noun} if it's not here")
-
-
 # Make a new player object that is currently in the 'outside' room.
 # Write a loop that:
-
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-
 # * Waits for user input and decides what to do.
-
-
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
@@ -110,7 +67,6 @@ actions = ("take", "drop")
 print(player.current_room.get_exits_string())
 # now make the REPL
 while True:
-
     # check for things in the room
     player.current_room.found_items(player.name)
     # make it so player can grab an item
@@ -126,6 +82,8 @@ while True:
             exit()
         elif cmd[0] == "help":
             print("help... until i make this more fun later")
+        elif cmd[0] == "i" or cmd[0] == "inventory" or cmd[0] == "shit":
+            player.get_inventory()
         else:
             print("I don't get what you mean...either n,s,e,w or q for Quit")
     elif len(cmd) == 2:

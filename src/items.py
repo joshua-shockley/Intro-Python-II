@@ -12,4 +12,4 @@ class Items:
         return f' picked up {self.name}'
 
     def on_drop(self):
-        print(f'dropped {self.name}')
+        return f'dropped {self.name}'

@@ -1,10 +1,10 @@
 from room import Room
 from player import Player
-from items import Items
+from items import Items, LightSource, Treasure
 
 # declare items
 items = {
-    'lamp': Items("Lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
+    'torch': Items("Torch", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
 
     'cat': Items('Cat', """EEW! You can smell that cat from a mile away"""),
 
@@ -15,6 +15,9 @@ items = {
     'chest': Items('Chest', """It's empty alright.... Dammit!""")
 }
 
+lightsource = {
+    'lamp': LightSource("Lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
+}
 
 # Declare all the rooms
 
@@ -23,7 +26,7 @@ room = {
                      "North of you, the cave mount beckons", ),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", {"cat": items["cat"], "lamp": items["lamp"]}),
+passages run north and east.""", {"cat": items["cat"], "torch": items["torch"]}, {"lamp": lightsource["lamp"]}),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -69,6 +72,7 @@ print(player.current_room.get_exits_string())
 while True:
     # check for things in the room
     player.current_room.found_items(player.name)
+    player.current_room.found_lightsource(player.name)
     # make it so player can grab an item
     # make it so player can drop an item into the room list
     # ask for direction promt
@@ -88,8 +92,14 @@ while True:
             print("I don't get what you mean...either n,s,e,w or q for Quit")
     elif len(cmd) == 2:
         if cmd[0] == "take":
-            player.add_item(cmd[1])
+            if cmd[1] == "lamp":
+                player.add_light(cmd[1])
+            else:
+                player.add_item(cmd[1])
         elif cmd[0] == "drop":
-            player.remove_item(cmd[1])
+            if cmd[1] == "lamp":
+                player.remove_light(cmd[1])
+            else:
+                player.remove_item(cmd[1])
     else:
         print(f"\n{player.name} I don't know what you're doing but quit! \n")

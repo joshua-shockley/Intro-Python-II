@@ -3,7 +3,7 @@
 
 
 class Room:
-    def __init__(self, name, description, items={}):
+    def __init__(self, name, description, items={}, lightsource={}):
         #name, description
         self.name = name
         self.description = description
@@ -13,6 +13,7 @@ class Room:
         self.e_to = None
         self.w_to = None
         self.items = items
+        self.lightsource = lightsource
 
     def __str__(self):
         d_string = ""
@@ -30,6 +31,10 @@ class Room:
                 print(f' found this {item} ')
         else:
             return None
+
+    def found_lightsource(self, guy):
+        if len(self.lightsource) == 1:
+            print('found a lamp!')
 
     def get_room(self, direction):
         if hasattr(self, f"{direction}_to"):

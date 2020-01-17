@@ -30,11 +30,28 @@ class Player:
         except KeyError:
             print("wtf")
 
+    def add_light(self, item):
+        try:
+            self.inventory[item] = self.current_room.lightsource[item]
+            del self.current_room.lightsource[item]
+            print(f'picked up {item}')
+            self.has_what(self.inventory[item])
+        except KeyError:
+            print("wtf")
+
     def remove_item(self, item):
         try:
             self.current_room.items[item] = self.inventory[item]
             del self.inventory[item]
             self.droped_what(self.current_room.items[item])
+        except KeyError:
+            print('wtf')
+
+    def remove_light(self, item):
+        try:
+            self.current_room.lightsource[item] = self.inventory[item]
+            del self.inventory[item]
+            self.droped_what(self.current_room.lightsource[item])
         except KeyError:
             print('wtf')
 

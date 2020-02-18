@@ -1,5 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
+import time
 
 
 class Room:
@@ -18,6 +19,7 @@ class Room:
         d_string = ""
         d_string = f"\n---------------------\n"
         d_string += f"\n{self.name}\n"
+        time.sleep(1)
         d_string += f"\n {self.description}\n"
         d_string += f"\n{self.get_exits_string()}\n"
 
@@ -27,7 +29,8 @@ class Room:
         if len(self.items) > 0:
             print('when looking around.....\n')
             for item in self.items:
-                print(f' found this {item} ')
+                time.sleep(1)
+                print(f' found this {item} \n')
         else:
             return None
 
@@ -50,4 +53,5 @@ class Room:
         return exits
 
     def get_exits_string(self):
-        return f"You can go: {','.join(self.get_exits())} "
+        time.sleep(1)
+        return f"\nYou can go: {','.join(self.get_exits())} "

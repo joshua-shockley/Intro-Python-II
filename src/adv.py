@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from items import Items
+import time
 
 # declare items
 items = {
@@ -61,7 +62,7 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 player = Player(input("pick a name for your player: "), room['outside'])
-print(f'\n{player.name} is walking up to the cave and looks around..... \n {player.current_room.name} \n \n\n {player.current_room.description}')
+print(f'\n{player.name} is walking up to the cave and looks around..... \n \n{player.current_room.name} \n \n\n {player.current_room.description}\n\n')
 directions = ("n", "s", "e", "w")
 actions = ("take", "drop")
 print(player.current_room.get_exits_string())
@@ -84,6 +85,7 @@ while True:
             print("help... until i make this more fun later")
         elif cmd[0] == "i" or cmd[0] == "inventory" or cmd[0] == "shit":
             player.get_inventory()
+            time.sleep(1)
         else:
             print("I don't get what you mean...either n,s,e,w or q for Quit")
     elif len(cmd) == 2:

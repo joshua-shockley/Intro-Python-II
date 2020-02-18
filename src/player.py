@@ -25,7 +25,7 @@ class Player:
         try:
             self.inventory[item] = self.current_room.items[item]
             del self.current_room.items[item]
-            print(f'picked up {item}')
+            # print(f'picked up {item}')
             self.has_what(self.inventory[item])
         except KeyError:
             print("wtf")
@@ -39,7 +39,7 @@ class Player:
             print('wtf')
 
     def has_what(self, item):
-        print(f'{self.name} now has {item.on_take()}')
+        print(f'{self.name} now has {item.on_take()}\n')
 
     def droped_what(self, item):
         print(f'{self.name} now has {item.on_drop()}')

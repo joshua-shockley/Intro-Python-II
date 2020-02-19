@@ -4,54 +4,18 @@ import time
 
 
 class Room:
-    def __init__(self, name, description, items={}):
-        #name, description
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        #n_to, s_to, e_to, w_to
+        # use the links to make attr
         self.n_to = None
         self.s_to = None
         self.e_to = None
         self.w_to = None
-        self.items = items
+        # for later when making items
+        self.items = {}
 
     def __str__(self):
-        d_string = ""
-        d_string = f"\n---------------------\n"
-        d_string += f"\n{self.name}\n"
-        time.sleep(1)
-        d_string += f"\n {self.description}\n"
-        d_string += f"\n{self.get_exits_string()}\n"
-
-        return d_string
-
-    def found_items(self, guy):
-        if len(self.items) > 0:
-            print('when looking around.....\n')
-            for item in self.items:
-                time.sleep(1)
-                print(f' found this {item} \n')
-        else:
-            return None
-
-    def get_room(self, direction):
-        if hasattr(self, f"{direction}_to"):
-            return getattr(self, f"{direction}_to")
-        else:
-            return None
-
-    def get_exits(self):
-        exits = []
-        if self.n_to:
-            exits.append("n")
-        if self.s_to:
-            exits.append("s")
-        if self.e_to:
-            exits.append("e")
-        if self.w_to:
-            exits.append("w")
-        return exits
-
-    def get_exits_string(self):
-        time.sleep(1)
-        return f"\nYou can go: {','.join(self.get_exits())} "
+        print('\n this happens at the point of each init?')
+        print("\n\n more stuff to print \n\n")
+        return f"\n{self.name}\n\n\n{self.description}"

@@ -1,20 +1,19 @@
 from room import Room
 from player import Player
-from items import Items
 import time
 
-# declare items
-items = {
-    'lamp': Items("Lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
+# # declare items
+# items = {
+#     'lamp': Items("Lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
 
-    'cat': Items('Cat', """EEW! You can smell that cat from a mile away"""),
+#     'cat': Items('Cat', """EEW! You can smell that cat from a mile away"""),
 
-    'book': Items('Book', """You find this book on the floor near the window... it's in a language you're not familiar with"""),
+#     'book': Items('Book', """You find this book on the floor near the window... it's in a language you're not familiar with"""),
 
-    "binoculars": Items('Binoculars', """Brass viewing glasses that look older than yo' grandma's grandma... but somehow in mint condition"""),
+#     "binoculars": Items('Binoculars', """Brass viewing glasses that look older than yo' grandma's grandma... but somehow in mint condition"""),
 
-    'chest': Items('Chest', """It's empty alright.... Dammit!""")
-}
+#     'chest': Items('Chest', """It's empty alright.... Dammit!""")
+# }
 
 
 # Declare all the rooms
@@ -24,18 +23,18 @@ room = {
                      "North of you, the cave mount beckons", ),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", {"cat": items["cat"], "lamp": items["lamp"]}),
+passages run north and east.""", ),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", {"book": items["book"], "binoculars": items["binoculars"]}),
+the distance, but there is no way across the chasm.""", ),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", {"chest": items["chest"]}),
+earlier adventurers. The only exit is to the south.""", ),
 }
 
 # Link rooms together
@@ -64,34 +63,6 @@ room['treasure'].s_to = room['narrow']
 player = Player(input("pick a name for your player: "), room['outside'])
 print(f'\n{player.name} is walking up to the cave and looks around..... \n \n{player.current_room.name} \n \n\n {player.current_room.description}\n\n')
 directions = ("n", "s", "e", "w")
-actions = ("take", "drop")
-print(player.current_room.get_exits_string())
-# now make the REPL
-while True:
-    # check for things in the room
-    player.current_room.found_items(player.name)
-    # make it so player can grab an item
-    # make it so player can drop an item into the room list
-    # ask for direction promt
-    cmd = input("~~~~~> ").lower().split()
-    if len(cmd) == 1:
-        # check to see which direction
-        if cmd[0] in directions:
-            player.travel(cmd[0])
-        elif cmd[0] == "q":
-            print("Goodbye..... Quitter!")
-            exit()
-        elif cmd[0] == "help":
-            print("help... until i make this more fun later")
-        elif cmd[0] == "i" or cmd[0] == "inventory" or cmd[0] == "shit":
-            player.get_inventory()
-            time.sleep(1)
-        else:
-            print("I don't get what you mean...either n,s,e,w or q for Quit")
-    elif len(cmd) == 2:
-        if cmd[0] == "take":
-            player.add_item(cmd[1])
-        elif cmd[0] == "drop":
-            player.remove_item(cmd[1])
-    else:
-        print(f"\n{player.name} I don't know what you're doing but quit! \n")
+commands = ("n", "s", "e", "w", "q")
+
+print(room['outside'])

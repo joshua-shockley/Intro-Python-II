@@ -63,6 +63,13 @@ room['treasure'].s_to = room['narrow']
 player = Player(input("pick a name for your player: "), room['outside'])
 print(f'\n{player.name} is walking up to the cave and looks around..... \n \n{player.current_room.name} \n \n\n {player.current_room.description}\n\n')
 directions = ("n", "s", "e", "w")
-commands = ("n", "s", "e", "w", "q")
 
-print(room['outside'])
+while True:
+    cmd = input('-------> ').lower()
+    if cmd in directions:
+        player.moves(cmd)
+    elif cmd == "help":
+        print('not sure what help you need here.... lol')
+    elif cmd == "q":
+        print('by motha luvah!')
+        exit()

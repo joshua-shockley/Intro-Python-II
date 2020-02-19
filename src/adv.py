@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from help import help
 import time
 
 # # declare items
@@ -60,16 +61,56 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+# making functions to call in the while loop
+
+
 player = Player(input("pick a name for your player: "), room['outside'])
+
+
+def quit(user):
+    print('aaaaah... fine see you later')
+    time.sleep(1)
+    print(f'by {user}!')
+    time.sleep(2)
+    exit()
+
+
+# def help():
+#     print("tell me what you need help with here\n")
+#     h_cmd = input(
+#         f"{player.name}, what do you need help with?...\n\n examples: \n game play  all possible commands").lower()
+#     if h_cmd is None:
+#         print('you have to type something for me to know how to help...')
+#         help()
+#     elif h_cmd == "":
+#         print('you have to type something for me to know how to help...')
+#         help()
+#     elif h_cmd == "life":
+#         print('life is life dude.... just go live it!')
+#     elif h_cmd == "love":
+#         print("love hard and love fiercely. Otherwise what's the point")
+#     elif h_cmd == "money":
+#         print(
+#             "I really don't know what to tell you about money.... \n\n I don't have any either. :(")
+#     elif h_cmd == "fashion":
+#         print("It's all bullshit really... But, there are some poorly designed styles out there, so really think it through.")
+#     elif h_cmd == "game play":
+#         print('follow the directions as you go. \nIt gets much easier if you read what the display asks for or shows as an option. \nMost commands are explained in the request. \n\n For a full list of the commands; after entering "help" enter "all possible commands". \nThis will show all commands whether for game play or help menu.')
+
+
 print(f'\n{player.name} is walking up to the cave and looks around..... \n \n{player.current_room.name} \n \n\n {player.current_room.description}\n\n')
 directions = ("n", "s", "e", "w")
+print(player.current_room.routes_str())
 
 while True:
     cmd = input('-------> ').lower()
     if cmd in directions:
+        time.sleep(1)
         player.moves(cmd)
     elif cmd == "help":
-        print('not sure what help you need here.... lol')
+        time.sleep(1)
+        help(player.name)
+        print(player.current_room.routes_str())
     elif cmd == "q":
-        print('by motha luvah!')
-        exit()
+        quit(player.name)

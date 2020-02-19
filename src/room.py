@@ -16,20 +16,25 @@ class Room:
         self.items = {}
 
     def __str__(self):
-        p_string = f'\n this happens at the point of each init? \n'
-        p_string += f"\n\n more stuff to print \n\n"
-        p_string += f"\n{self.name}\n\n\n{self.description}\n\n"
-        p_string += f"\n\n{self.routes_str()} "
+        p_string = f"\n\n"
+        time.sleep(1)
+        p_string += f"\n{self.name}\n"
+        p_string += f"\n{self.description}\n\n"
+        p_string += f"\n{self.get_items()}\n"
+        p_string += f"\n{self.routes_str()} "
         return p_string
 
 
 # next function matches up with the linked room on adv.py and the above {direction}_to  which sets up which direction has a next value or None as its set to None as default until it hits the linked rooms
 
+
     def get_room(self, direction):
+        # this part is looking at whether there is an assignment of the .{direction}_to from above then created in the linked list in adv.py
         if hasattr(self, f"{direction}_to"):
+            # this then returns the new assignment created by the link
             return getattr(self, f"{direction}_to")
         else:
-            return None
+            return None  # if no assignment then it changes nothing and player hasn't moved
 
 # this method get the availabel routes from where current location is to the next
     def get_routes(self):
@@ -47,5 +52,13 @@ class Room:
 
 # this method actually prints out the list of possible directions
 
+
     def routes_str(self):
-        return f"\n\n possible routes are: {','.join(self.get_routes())}\n\n"
+        return f"\n possible routes are: {', '.join(self.get_routes())}\n"
+
+    def get_items(self):
+        if len(self.items) > 0:
+            for thing in self.items:
+                print(thing)
+        else:
+            return f"you found this area empty...\n\n nothing to collect!... "

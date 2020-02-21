@@ -1,41 +1,42 @@
 from room import Room
+from item import Items
 from player import Player
 from help import help
+from quit import *
 import time
 
-# # declare items
-# items = {
-#     'lamp': Items("Lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
+# declare items
+items = {
+    'lamp': Items("Lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
 
-#     'cat': Items('Cat', """EEW! You can smell that cat from a mile away"""),
+    'cat': Items('Cat', """EEW! You can smell that cat from a mile away"""),
 
-#     'book': Items('Book', """You find this book on the floor near the window... it's in a language you're not familiar with"""),
+    'book': Items('Book', """You find this book on the floor near the window... it's in a language you're not familiar with"""),
 
-#     "binoculars": Items('Binoculars', """Brass viewing glasses that look older than yo' grandma's grandma... but somehow in mint condition"""),
+    "binoculars": Items('Binoculars', """Brass viewing glasses that look older than yo' grandma's grandma... but somehow in mint condition"""),
 
-#     'chest': Items('Chest', """It's empty alright.... Dammit!""")
-# }
+    'chest': Items('Chest', """It's empty alright.... Dammit!""")
+}
 
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", ),
+                     "North of you, the cave mount beckons",),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", ),
+passages run north and east.""", {"Cat": items["cat"]}),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", ),
+the distance, but there is no way across the chasm.""", {"binoculars": items["binoculars"]}),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", ),
+earlier adventurers. The only exit is to the south.""", {"book": items["book"], "chest": items["chest"]}),
 }
 
 # Link rooms together
@@ -64,50 +65,24 @@ room['treasure'].s_to = room['narrow']
 
 # making functions to call in the while loop
 
-
+directions = ("n", "s", "e", "w")
 player = Player(input("pick a name for your player: "), room['outside'])
 
-
-def quit(user):
-    print('aaaaah... fine see you later')
-    time.sleep(1)
-    print(f'by {user}!')
-    time.sleep(2)
-    exit()
-
-
-# def help():
-#     print("tell me what you need help with here\n")
-#     h_cmd = input(
-#         f"{player.name}, what do you need help with?...\n\n examples: \n game play  all possible commands").lower()
-#     if h_cmd is None:
-#         print('you have to type something for me to know how to help...')
-#         help()
-#     elif h_cmd == "":
-#         print('you have to type something for me to know how to help...')
-#         help()
-#     elif h_cmd == "life":
-#         print('life is life dude.... just go live it!')
-#     elif h_cmd == "love":
-#         print("love hard and love fiercely. Otherwise what's the point")
-#     elif h_cmd == "money":
-#         print(
-#             "I really don't know what to tell you about money.... \n\n I don't have any either. :(")
-#     elif h_cmd == "fashion":
-#         print("It's all bullshit really... But, there are some poorly designed styles out there, so really think it through.")
-#     elif h_cmd == "game play":
-#         print('follow the directions as you go. \nIt gets much easier if you read what the display asks for or shows as an option. \nMost commands are explained in the request. \n\n For a full list of the commands; after entering "help" enter "all possible commands". \nThis will show all commands whether for game play or help menu.')
-
-
-print(f'\n{player.name} is walking up to the cave and looks around..... \n \n{player.current_room.name} \n \n\n {player.current_room.description}\n\n')
-directions = ("n", "s", "e", "w")
+print(f'\n{player.name} is walking up to the cave and looks around..... \n')
+time.sleep(2)
+print(f'\n{player.current_room.name} \n ')
+time.sleep(1.5)
+print(f'\n\n {player.current_room.description}\n\n')
+time.sleep(1.5)
 print(player.current_room.routes_str())
 
 while True:
+    # check for things in the room
+    print(player.current_room.get_room_items())
     cmd = input('-------> ').lower()
     if cmd in directions:
-        time.sleep(1)
         player.moves(cmd)
+        time.sleep(1)
     elif cmd == "help":
         time.sleep(1)
         help(player.name)

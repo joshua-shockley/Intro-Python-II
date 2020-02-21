@@ -4,7 +4,7 @@ import time
 
 
 class Room:
-    def __init__(self, name, description):
+    def __init__(self, name, description, items={}):
         self.name = name
         self.description = description
         # use the links to make attr
@@ -13,14 +13,13 @@ class Room:
         self.e_to = None
         self.w_to = None
         # for later when making items
-        self.items = {}
+        self.items = items
 
     def __str__(self):
         p_string = f"\n\n"
         time.sleep(1)
         p_string += f"\n{self.name}\n"
         p_string += f"\n{self.description}\n\n"
-        p_string += f"\n{self.get_items()}\n"
         p_string += f"\n{self.routes_str()} "
         return p_string
 
@@ -56,9 +55,15 @@ class Room:
     def routes_str(self):
         return f"\n possible routes are: {', '.join(self.get_routes())}\n"
 
-    def get_items(self):
+    def get_room_items(self):
         if len(self.items) > 0:
-            for thing in self.items:
-                print(thing)
+            list = []
+            time.sleep(1)
+            print(f"you found:")
+            for item in self.items:
+                list.append(item)
+                for thing in list:
+                    # print(thing)
+                    return thing
         else:
             return f"you found this area empty...\n\n nothing to collect!... "

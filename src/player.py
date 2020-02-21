@@ -8,9 +8,13 @@ class Player:
     def __init__(self, name, starting_room):
         self.name = name
         self.current_room = starting_room
+        self.inventory = {}
 
-        # self.inventory = {}
+    def __str__(self):
+        return f"{self.name}"
+
     # sets current room and prints it... if unable to do the room movement it prints my move error
+
     def moves(self, direction):
         next = self.current_room.get_room(direction)
         if next is not None:

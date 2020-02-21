@@ -15,7 +15,9 @@ items = {
 
     "binoculars": Items('Binoculars', """Brass viewing glasses that look older than yo' grandma's grandma... but somehow in mint condition"""),
 
-    'chest': Items('Chest', """It's empty alright.... Dammit!""")
+    'chest': Items('Chest', """It's empty alright.... Dammit!"""),
+
+    'coins': Items("Coins", """What! you found some coins in the corner under the book.... take that shtuff!"""),
 }
 
 
@@ -36,7 +38,7 @@ to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", {"book": items["book"], "chest": items["chest"]}),
+earlier adventurers. The only exit is to the south.""", {"book": items["book"], "chest": items["chest"], "coins": items["coins"]}),
 }
 
 # Link rooms together
@@ -66,6 +68,9 @@ room['treasure'].s_to = room['narrow']
 # making functions to call in the while loop
 
 directions = ("n", "s", "e", "w")
+player_gear_cmds = ('gear', 'stuff', 'items', 'i',
+                    'describe', 'desc', 'd', 'take')
+room_items_cmds = ("things", "items", "i", )
 player = Player(input("pick a name for your player: "), room['outside'])
 
 print(f'\n{player.name} is walking up to the cave and looks around..... \n')
@@ -79,13 +84,39 @@ print(player.current_room.routes_str())
 while True:
     # check for things in the room
     print(player.current_room.get_room_items())
-    cmd = input('-------> ').lower()
-    if cmd in directions:
-        player.moves(cmd)
-        time.sleep(1)
-    elif cmd == "help":
-        time.sleep(1)
-        help(player.name)
-        print(player.current_room.routes_str())
-    elif cmd == "q":
-        quit(player.name)
+    cmd = input('-------> ').lower().split()
+    print(cmd)
+    if len(cmd) == 1:
+        if cmd[0] in directions:
+            player.moves(cmd)
+            time.sleep(1)
+        elif cmd[0] == "help":
+            time.sleep(1)
+            help(player.name)
+            print(player.current_room.routes_str())
+        elif cmd[0] == "q":
+            quit(player.name)
+    elif len(cmd) == 2:
+        if cmd[0] == "player":
+            if cmd[1] in player_gear_cmds:
+                if cmd[1] == "gear" or cmd[1] == "stuff" or cmd[1] == "items" or cmd[1] == "i":
+                    time.sleep(1)
+                    player.gear()
+                elif cmd[1] == "describe" or cmd[1] == "desc" or cmd[1] == "d":
+                    time.sleep(1)
+                    info = input(
+                        "what is the item you want to look at?\n--->  ")
+                    ## still need to re-reference how to pull up the class name and description separately ##
+                    print(items.get(info))
+            else:
+                print(
+                    f"you didnt enter a proper option\n\n try one of the following for the second entry, example: 'player' 'second entry'\n\n")
+                for option in player_gear_cmds:
+                    print(option)
+        if cmd[0] == "take":
+            print('take what?')
+        if cmd[0] == 'drop':
+            print('what did you drop now?')
+        else:
+            print("currently what you have typed isn't going to do anything")
+            print(cmd)

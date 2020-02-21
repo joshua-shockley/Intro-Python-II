@@ -63,7 +63,6 @@ class Room:
             for item in self.items:
                 list.append(item)
                 for thing in list:
-                    # print(thing)
                     return thing
         else:
             return f"you found this area empty...\n\n nothing to collect!... "

@@ -8,6 +8,7 @@ class Player:
     def __init__(self, name, starting_room):
         self.name = name
         self.current_room = starting_room
+        #self.description= description
         self.inventory = {}
 
     def __str__(self):
@@ -24,3 +25,16 @@ class Player:
             print(f"{self.name}, You aren't able to go that way")
             time.sleep(2)
             print(f"bruises or impeeding death awaits if you keep that up")
+
+    def gear(self):
+        # list = []
+        print(f"{self.name} has:")
+        time.sleep(1)
+        if len(self.inventory) > 0:
+            for item in self.inventory:
+                print(item)
+                # list.append(item)
+                # for thing in list:
+                #     print(thing)
+        else:
+            print(f"Nothing, you got no Shtuff!")

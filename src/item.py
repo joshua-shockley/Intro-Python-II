@@ -7,4 +7,4 @@ class Items:
 
     def __str__(self):
         # want it to say its name then describe it
-        return f"{self.name}, {self.description}"
+        return f"   {self.name}\n{self.description}"

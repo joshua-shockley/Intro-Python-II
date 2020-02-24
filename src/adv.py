@@ -3,23 +3,23 @@ from item import Items
 from player import Player
 from help import help
 from quit import *
+from layouts import the_layout
 import time
 
 # declare items
 items = {
-    'lamp': Items("Lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
+    'lamp': Items("lamp", """looks old but still has fluid in it... you light it with the flint attatched to the bottom to get a better view"""),
 
-    'cat': Items('Cat', """EEW! You can smell that cat from a mile away"""),
+    'cat': Items('cat', """EEW! You can smell that cat from a mile away"""),
 
-    'book': Items('Book', """You find this book on the floor near the window... it's in a language you're not familiar with"""),
+    'book': Items('book', """You find this book on the floor near the window... it's in a language you're not familiar with"""),
 
-    "binoculars": Items('Binoculars', """Brass viewing glasses that look older than yo' grandma's grandma... but somehow in mint condition"""),
+    "binoculars": Items('binoculars', """Brass viewing glasses that look older than yo' grandma's grandma... but somehow in mint condition"""),
 
-    'chest': Items('Chest', """It's empty alright.... Dammit!"""),
+    'chest': Items('chest', """It's empty alright.... Dammit!"""),
 
-    'coins': Items("Coins", """What! you found some coins in the corner under the book.... take that shtuff!"""),
+    'coins': Items("coins", """What! you found some coins in the corner under the book.... take that shtuff!"""),
 }
-
 
 # Declare all the rooms
 room = {
@@ -27,7 +27,7 @@ room = {
                      "North of you, the cave mount beckons",),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", {"Cat": items["cat"]}),
+passages run north and east.""", {"cat": items["cat"]}),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -38,7 +38,7 @@ to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", {"book": items["book"], "chest": items["chest"], "coins": items["coins"]}),
+earlier adventurers. The only exit is to the south.""", {"chest": items["chest"], "book": items["book"], "coins": items["coins"]}),
 }
 
 # Link rooms together
@@ -75,20 +75,26 @@ player = Player(input("pick a name for your player: "), room['outside'])
 
 print(f'\n{player.name} is walking up to the cave and looks around..... \n')
 time.sleep(2)
-print(f'\n{player.current_room.name} \n ')
-time.sleep(1.5)
+# print(f'\n{player.current_room.name} \n ')
+# time.sleep(1.5)
+print(f'{the_layout(player.current_room.name)}')
+time.sleep(1)
 print(f'\n\n {player.current_room.description}\n\n')
 time.sleep(1.5)
 print(player.current_room.routes_str())
 
 while True:
     # check for things in the room
-    print(player.current_room.get_room_items())
+    if player.current_room.get_room_items() is not None:
+        things = player.current_room.get_room_items()
+        print('you found something while looking around!')
+        for thing in things:
+            print(f"{items[thing].name}:\n{items[thing].description}\n\n")
     cmd = input('-------> ').lower().split()
-    print(cmd)
+    print('printing cmd remove this later', cmd)
     if len(cmd) == 1:
         if cmd[0] in directions:
-            player.moves(cmd)
+            player.moves(cmd[0])
             time.sleep(1)
         elif cmd[0] == "help":
             time.sleep(1)
@@ -96,6 +102,13 @@ while True:
             print(player.current_room.routes_str())
         elif cmd[0] == "q":
             quit(player.name)
+        elif cmd[0] == "take":
+            print(player.take_talk())
+        elif cmd[0] == "drop":
+            print(player.drop_talk())
+        else:
+            print("currently what you have typed isn't going to do anything")
+            print(cmd)
     elif len(cmd) == 2:
         if cmd[0] == "player":
             if cmd[1] in player_gear_cmds:
@@ -108,15 +121,11 @@ while True:
                         "what is the item you want to look at?\n--->  ")
                     ## still need to re-reference how to pull up the class name and description separately ##
                     print(items.get(info))
-            else:
-                print(
-                    f"you didnt enter a proper option\n\n try one of the following for the second entry, example: 'player' 'second entry'\n\n")
-                for option in player_gear_cmds:
-                    print(option)
-        if cmd[0] == "take":
-            print('take what?')
-        if cmd[0] == 'drop':
-            print('what did you drop now?')
-        else:
-            print("currently what you have typed isn't going to do anything")
-            print(cmd)
+                else:
+                    print(
+                        f"you didnt enter a proper option\n\n try one of the following for the second entry, example: 'player' 'second entry'\n\n")
+                    for option in player_gear_cmds:
+                        print(option)
+    else:
+        print("currently what you have typed isn't going to do anything\n you will need to stick to 1 input like 'help' or 'q'\n or a 2 input like 'player gear'... \n\n input 'help' for more specific instructions")
+        print(cmd)

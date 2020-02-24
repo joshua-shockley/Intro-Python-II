@@ -26,7 +26,6 @@ class Room:
 
 # next function matches up with the linked room on adv.py and the above {direction}_to  which sets up which direction has a next value or None as its set to None as default until it hits the linked rooms
 
-
     def get_room(self, direction):
         # this part is looking at whether there is an assignment of the .{direction}_to from above then created in the linked list in adv.py
         if hasattr(self, f"{direction}_to"):
@@ -51,18 +50,16 @@ class Room:
 
 # this method actually prints out the list of possible directions
 
-
     def routes_str(self):
         return f"\n possible routes are: {', '.join(self.get_routes())}\n"
 
     def get_room_items(self):
-        if len(self.items) > 0:
+        if len(self.items) >= 1:
             list = []
-            time.sleep(1)
-            print(f"you found:")
             for item in self.items:
                 list.append(item)
-                for thing in list:
-                    return thing
+            time.sleep(1)
+            return list
         else:
-            return f"you found this area empty...\n\n nothing to collect!... "
+            return None
+            # return f"you found this area empty...\n\n nothing to collect!... "

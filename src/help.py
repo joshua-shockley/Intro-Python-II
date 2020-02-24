@@ -1,9 +1,11 @@
 import time
 commands = {"love": "love hard and love fiercely. Otherwise what's the point",
             "life": 'life is life dude.... just go live it!',
-            "money": "I really don't know what to tell you about money.... \n I don't have any either. :(",
+            "money": "I really don't know what to tell you about money.... I don't have any either. :(",
             "fashion": "It's all bullshit really... But, there are some poorly designed styles out there, so really think it through.",
-            "game play": 'follow the directions as you go. \nIt gets much easier if you read what the display asks for or shows as an option. \nMost commands are explained in the request. \n\n For a full list of the commands; after entering "help" enter "all possible commands". \nThis will show all commands whether for game play or help menu.', }
+            "game play": 'follow the directions as you go. It gets much easier if you read what the display asks for or shows as an option. Most commands are explained in the request. For a full list of the commands; after entering "help" enter "all possible commands". \nThis will show all commands whether for game play or help menu.',
+            "take": 'this command sets up for picking up an item from the current room the player is in',
+            "drop": 'this command sets up for removing an item from player gear and leving it in the players current room'}
 
 
 def help(user):

@@ -14,6 +14,12 @@ class Player:
     def __str__(self):
         return f"{self.name}"
 
+    def take_talk(self):
+        return f"take what?"
+
+    def drop_talk(self):
+        return f"what did you drop now?"
+
     # sets current room and prints it... if unable to do the room movement it prints my move error
 
     def moves(self, direction):
